@@ -7,7 +7,7 @@
 5 성공적으로 전송
 """ 
 
-def check(zigbee_state,wifi_state):
+def check_slot5(zigbee_state,wifi_state):
     slot_state=[]
     
     for idx in range(10000):
