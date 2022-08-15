@@ -12,7 +12,7 @@ def make_network(zig_num,slot_kind):
     zigbee_state=make_zig(zig_num)
     if slot_kind==3:
         slot_state=check_slot3(zigbee_state,wifi_state)
-    elif slot_kind==5:
+    else:
         slot_state=check_slot5(zigbee_state,wifi_state)
     
     

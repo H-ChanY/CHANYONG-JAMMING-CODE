@@ -3,7 +3,7 @@ def make_zig(num):
     zigbee1=[]
     zigbee2=[0 for _ in range(10000)]
     zigbee3=[0 for _ in range(10000)]
-    Back_off=Backoff(1,16)
+    Back_off=Backoff(1,2)
     if num==1:
         zigbee2=[0 for _ in range(10000)]
         zigbee3=[0 for _ in range(10000)]
@@ -51,7 +51,6 @@ def make_zig(num):
                 Back_off.delay_2-=1
                 zigbee2.append(0)
     elif num==3:
-        Back_off=Backoff(1,16)
         zigbee1=[]
         zigbee2=[]
         zigbee3=[]

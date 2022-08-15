@@ -1,7 +1,7 @@
 from BACKOFF import Backoff
 
 def make_wifi():
-    Back_off=Backoff(16,64)
+    Back_off=Backoff(1,8)
     wifi1=[]
     wifi2=[]
     wifi3=[]
