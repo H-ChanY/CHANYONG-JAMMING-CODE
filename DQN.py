@@ -4,14 +4,19 @@ import numpy as np
 import random
 from gym import spaces
 from collections import deque
-from stable_baselines.deepq.policies import CnnPolicy,MlpPolicy
+from stable_baselines.deepq.policies import MlpPolicy, FeedForwardPolicy
 from stable_baselines.common.vec_env import DummyVecEnv
 from stable_baselines import DQN
-import tensorflow as tf
+
 import time
 
 random.seed(32184939)
 
+class CustomDQNPolicy(FeedForwardPolicy):
+    def __init__(self,*args,**kwargs):
+        super(CustomDQNPolicy,self).__init__(*args,**kwargs,layers=[32,32],
+                                             layer_norm=False,
+                                             feature_extraction='mlp')
 
 class NetworkEnv(gym.Env):
     metadata={'render.modes': ['human']}
@@ -135,8 +140,8 @@ for a in range(2):
             
             env=DummyVecEnv([lambda: env])
             start=time.time()
-            model=DQN(MlpPolicy,env,gamma=0.99,learning_rate=0.001,buffer_size=500,batch_size=32,target_network_update_freq=1,train_freq=1,learning_starts=1000,verbose=0)
-            model.learn(total_timesteps=3000)
+            model=DQN(CustomDQNPolicy,env,gamma=0.99,learning_rate=0.001,buffer_size=500,batch_size=20,target_network_update_freq=10,train_freq=1,learning_starts=100,verbose=0)
+            model.learn(total_timesteps=10000)
             answer=[]
             jam_trans=0 
             jam_idle=0
@@ -209,10 +214,10 @@ for a in range(2):
                 trans_num_sum1+=trans_num
                 print(f'\nstate{chk}-1')     
                 print(f'\njam success {jam_trans} jam idle {jam_idle} jam occupy {jam_occupy} wait idle {wait_idle} wait occupy {wait_occupy} wait trans {wait_trans}')
-                print(f'\nreact success {react_success_sum1/1} react fail {react_fail_sum1/1}')
+                print(f'\nreact success {react_success_sum1/1} react fail {react_fail_sum1/2/1}')
                 print(f'\njam rate {jam_trans_sum1/(jam_trans_sum1+wait_trans_sum1)}')
                 print(f'\nHit rate deep {jam_trans_sum1/(jam_trans_sum1+jam_idle_sum1+jam_occupy_sum1)}')
-                print(f'\nHit rate react {react_success_sum1/(react_success_sum1+react_fail_sum1)}')
+                print(f'\nHit rate react {react_success_sum1/(react_success_sum1+react_fail_sum1/2)}')
                 print(f'\nidle num {idle_num_sum1/1} occupy num {occupy_num_sum1/1} trans num {trans_num_sum1/1}')
             elif i==2:
                 jam_trans_sum2+=jam_trans
@@ -226,10 +231,10 @@ for a in range(2):
                 trans_num_sum2+=trans_num
                 print(f'\nstate{chk}-2') 
                 print(f'\njam success {jam_trans} jam idle {jam_idle} jam occupy {jam_occupy} wait idle {wait_idle} wait occupy {wait_occupy} wait trans {wait_trans}')
-                print(f'\nreact success {react_success_sum2/1} react fail {react_fail_sum2/1}')
+                print(f'\nreact success {react_success_sum2/1} react fail {react_fail_sum2/2/1}')
                 print(f'\njam rate {jam_trans_sum2/(jam_trans_sum2+wait_trans_sum2)}')
                 print(f'\nHit rate deep {jam_trans_sum2/(jam_trans_sum2+jam_idle_sum2+jam_occupy_sum2)}')
-                print(f'\nHit rate react {react_success_sum2/(react_success_sum2+react_fail_sum2)}')
+                print(f'\nHit rate react {react_success_sum2/(react_success_sum2+react_fail_sum2/2)}')
                 print(f'\nidle num {idle_num_sum2/1} occupy num {occupy_num_sum2/1} trans num {trans_num_sum2/1}')
             elif i==3:
                 jam_trans_sum3+=jam_trans
@@ -243,10 +248,10 @@ for a in range(2):
                 trans_num_sum3+=trans_num
                 print(f'\nstate{chk}-3')  
                 print(f'\njam success {jam_trans} jam idle {jam_idle} jam occupy {jam_occupy} wait idle {wait_idle} wait occupy {wait_occupy} wait trans {wait_trans}')
-                print(f'\nreact success {react_success_sum3/1} react fail {react_fail_sum3/1}')
+                print(f'\nreact success {react_success_sum3/1} react fail {react_fail_sum3/2/1}')
                 print(f'\njam rate {jam_trans_sum3/(jam_trans_sum3+wait_trans_sum3)}')
                 print(f'\nHit rate deep {jam_trans_sum3/(jam_trans_sum3+jam_idle_sum3+jam_occupy_sum3)}')
-                print(f'\nHit rate react {react_success_sum3/(react_success_sum3+react_fail_sum3)}')
+                print(f'\nHit rate react {react_success_sum3/(react_success_sum3+react_fail_sum3/2)}')
                 print(f'\nidle num {idle_num_sum3/1} occupy num {occupy_num_sum3/1} trans num {trans_num_sum3/1}')
         
         '''print(f"\n-------------------zigbee {num}-------------------------")
