@@ -3,11 +3,9 @@ from new_network_state import make_network
 import numpy as np
 import random
 from gym import spaces
-from collections import deque
-from stable_baselines.deepq.policies import CnnPolicy,MlpPolicy
+from stable_baselines.common.policies import MlpPolicy
 from stable_baselines.common.vec_env import DummyVecEnv
-from stable_baselines import DQN
-import tensorflow as tf
+from stable_baselines import PPO2
 import time
 
 random.seed(32184939)
@@ -82,7 +80,6 @@ class NetworkEnv(gym.Env):
             self.observation_space=spaces.Box(low=1,high=5,shape=(1,1,10),dtype=np.int)
         self.reward=0
         self.next_state=self.state[0]
-        self.replay_buffer=deque(maxlen=500)
         self.idx=0
         return self.next_state
     
@@ -135,7 +132,7 @@ for a in range(2):
             
             env=DummyVecEnv([lambda: env])
             start=time.time()
-            model=DQN(MlpPolicy,env,gamma=0.99,learning_rate=0.001,buffer_size=500,batch_size=32,target_network_update_freq=1,train_freq=1,learning_starts=1000,verbose=0)
+            model=PPO2(MlpPolicy,env,verbose=0)
             model.learn(total_timesteps=3000)
             answer=[]
             jam_trans=0 
