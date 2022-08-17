@@ -187,7 +187,7 @@ for a in range(2):
                         wait_idle+=1
                     elif pred==0 and (slot_state[_]==2  or slot_state[_]==3):
                         wait_occupy+=1
-                    elif pred==0 and slot_state[_]==3:
+                    elif pred==0 and slot_state[_]==5:
                         wait_trans+=1
                     if (slot_state[_]==1 or slot_state[_]==4) :
                         idle_num+=1

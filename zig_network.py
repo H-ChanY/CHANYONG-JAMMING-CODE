@@ -125,5 +125,7 @@ def make_zig(num):
             zigbee_state.append(1)
         else:
             zigbee_state.append(0)
+    
     return zigbee_state
+
 

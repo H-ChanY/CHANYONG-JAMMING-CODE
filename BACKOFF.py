@@ -15,19 +15,19 @@ class Backoff:
     def Corrupt(self,zig):
         for num in zig:
             if num==1:
-                if self.max_delay1<1024:
+                if self.max_delay1<256:
                     self.max_delay1=self.max_delay1*2
                     self.delay_1=random.randint(self.min_init,self.max_delay1)
                 else:
                     self.delay_1=random.randint(self.min_init,self.max_delay1)
             elif num==2:
-                if self.max_delay2<1024:
+                if self.max_delay2<256:
                     self.max_delay2=self.max_delay2*2
                     self.delay_2=random.randint(self.min_init,self.max_delay2)
                 else:
                     self.delay_2=random.randint(self.min_init,self.max_delay2)
             elif num==3:
-                if self.max_delay3<1024:
+                if self.max_delay3<256:
                     self.max_delay3=self.max_delay3*2
                     self.delay_3=random.randint(self.min_init,self.max_delay3)
                 else:
