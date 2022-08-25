@@ -15,7 +15,7 @@ def make_network(zig_num,slot_kind):
     else:
         slot_state=check_slot5(zigbee_state,wifi_state)
     
-    
+    #print(slot_state[:200])
     for_train=[[] for _ in range(10000)]
     for i in range(10000):
         if i==0:
@@ -29,4 +29,10 @@ def make_network(zig_num,slot_kind):
         else:
             for k in range(9,-1,-1):
                 for_train[i].append(slot_state[i-k-1])
+    print(slot_state[1:100])
+    print(slot_state.count(1))
+    print(slot_state.count(2))
+    print(slot_state.count(3))
     return for_train,slot_state  
+
+make_network(3,3)

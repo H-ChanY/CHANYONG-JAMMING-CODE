@@ -133,7 +133,7 @@ for a in range(2):
             env=DummyVecEnv([lambda: env])
             start=time.time()
             model=PPO2(MlpPolicy,env,verbose=0)
-            model.learn(total_timesteps=3000)
+            model.learn(total_timesteps=100000)
             answer=[]
             jam_trans=0 
             jam_idle=0

@@ -16,7 +16,12 @@ def check_slot5(zigbee_state,wifi_state):
         elif wifi_state[idx]==1 and zigbee_state[idx]==0:
             slot_state.append(4)
         elif wifi_state[idx]==1 and (zigbee_state[idx]==1 or zigbee_state[idx]==2):
-            slot_state.append(3)
+            if (zigbee_state[idx-1]==1 or zigbee_state[idx-1]==2) and idx!=0:
+                slot_state.pop(-1)
+                slot_state.append(3)
+                slot_state.append(3)
+            else: 
+                slot_state.append(3)
         elif wifi_state[idx]==0 and zigbee_state[idx]==2:
             if wifi_state[idx-1]==1 and zigbee_state[idx-1]==2:
                 slot_state.append(3)
@@ -26,7 +31,7 @@ def check_slot5(zigbee_state,wifi_state):
             if wifi_state[idx-1]==1 and zigbee_state[idx-1]==1:
                 slot_state.append(3)
             elif zigbee_state[idx-1]==1:
-                slot_state.append(1)
+                slot_state.append(5)
             else: 
                 slot_state.append(5)
     return slot_state

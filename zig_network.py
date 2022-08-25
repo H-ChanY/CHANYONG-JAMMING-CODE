@@ -3,10 +3,8 @@ def make_zig(num):
     zigbee1=[]
     zigbee2=[0 for _ in range(10000)]
     zigbee3=[0 for _ in range(10000)]
-    Back_off=Backoff(1,2)
+    Back_off=Backoff(1,4)
     if num==1:
-        zigbee2=[0 for _ in range(10000)]
-        zigbee3=[0 for _ in range(10000)]
         while(1):
             if len(zigbee1)>=10000:
                 break
@@ -118,6 +116,7 @@ def make_zig(num):
                 Back_off.delay_3-=1
                 zigbee3.append(0)
     zigbee_state=[]
+
     for i in range(10000):
         if (zigbee1[i]+zigbee2[i]+zigbee3[i])>1:
             zigbee_state.append(2)
@@ -125,7 +124,6 @@ def make_zig(num):
             zigbee_state.append(1)
         else:
             zigbee_state.append(0)
-    
     return zigbee_state
 
 
